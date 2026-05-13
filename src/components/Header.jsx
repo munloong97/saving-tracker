@@ -24,7 +24,7 @@ export default function Header() {
   const locales = [
     { key: 'en', label: 'English' },
     { key: 'es', label: 'Español' },
-    { key: 'zh', label: '中文' },
+    { key: 'zh-CN', label: '中文' },
   ];
 
   return (
