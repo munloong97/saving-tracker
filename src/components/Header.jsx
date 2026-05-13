@@ -7,9 +7,10 @@ import {
   Text,
   CardRoot,
   CardBody,
-} from "@chakra-ui/react";
-import { useTranslation } from "react-i18next";
-import { useGoals } from "../context/GoalContext";
+} from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
+
+import { useGoals } from '../context/GoalContext';
 
 export default function Header() {
   const { t, i18n } = useTranslation();
@@ -21,9 +22,9 @@ export default function Header() {
   const totalSaved = Math.max(txTotal, goalCurrent);
 
   const locales = [
-    { key: "en", label: "English" },
-    { key: "es", label: "Español" },
-    { key: "zh", label: "中文" },
+    { key: 'en', label: 'English' },
+    { key: 'es', label: 'Español' },
+    { key: 'zh', label: '中文' },
   ];
 
   return (
@@ -33,12 +34,12 @@ export default function Header() {
         justify="space-between"
         mb={4}
         gap={4}
-        direction={{ base: "column", sm: "row" }}
+        direction={{ base: 'column', sm: 'row' }}
       >
-        <Heading size="lg">{t("appTitle")}</Heading>
+        <Heading size="lg">{t('appTitle')}</Heading>
         <Flex align="center" gap={2}>
           <Text fontSize="sm" color="textMuted">
-            {t("language")}:
+            {t('language')}:
           </Text>
           <NativeSelectRoot size="sm" width="140px">
             <NativeSelectField
@@ -65,10 +66,10 @@ export default function Header() {
               color="textMuted"
               mb={1}
             >
-              {t("totalSaved")}
+              {t('totalSaved')}
             </Text>
             <Text fontSize="xl" fontWeight="bold">
-              {t("currency", { value: totalSaved.toFixed(2) })}
+              {t('currency', { value: totalSaved.toFixed(2) })}
             </Text>
           </CardBody>
         </CardRoot>
@@ -81,10 +82,10 @@ export default function Header() {
               color="textMuted"
               mb={1}
             >
-              {t("totalTarget")}
+              {t('totalTarget')}
             </Text>
             <Text fontSize="xl" fontWeight="bold">
-              {t("currency", { value: totalTarget.toFixed(2) })}
+              {t('currency', { value: totalTarget.toFixed(2) })}
             </Text>
           </CardBody>
         </CardRoot>

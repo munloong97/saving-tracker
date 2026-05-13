@@ -1,5 +1,3 @@
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import {
   Box,
   Button,
@@ -11,8 +9,11 @@ import {
   Heading,
   Input,
   Stack,
-} from "@chakra-ui/react";
-import { useGoals } from "../context/GoalContext";
+} from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+
+import { useGoals } from '../context/GoalContext';
 
 export default function GoalForm() {
   const { t } = useTranslation();
@@ -37,49 +38,55 @@ export default function GoalForm() {
     <CardRoot mb={4}>
       <CardBody>
         <Heading size="md" mb={4}>
-          {t("addGoal")}
+          {t('addGoal')}
         </Heading>
         <Box as="form" onSubmit={handleSubmit(onSubmit)}>
           <Stack gap={4}>
             <FieldRoot invalid={!!errors.name}>
-              <FieldLabel>{t("goalName")}</FieldLabel>
+              <FieldLabel>{t('goalName')}</FieldLabel>
               <Input
-                placeholder={t("placeholderGoalName")}
-                {...register("name", { required: t("required") })}
+                placeholder={t('placeholderGoalName')}
+                {...register('name', { required: t('required') })}
               />
               <FieldErrorText>{errors.name?.message}</FieldErrorText>
             </FieldRoot>
 
             <FieldRoot invalid={!!errors.target}>
-              <FieldLabel>{t("targetAmount")}</FieldLabel>
+              <FieldLabel>{t('targetAmount')}</FieldLabel>
               <Input
                 type="number"
                 step="0.01"
                 min="0.01"
-                {...register("target", {
-                  required: t("required"),
-                  validate: (v) => parseFloat(v) > 0 || t("invalidNumber"),
+                {...register('target', {
+                  required: t('required'),
+                  validate: (v) => parseFloat(v) > 0 || t('invalidNumber'),
                 })}
               />
               <FieldErrorText>{errors.target?.message}</FieldErrorText>
             </FieldRoot>
 
             <FieldRoot invalid={!!errors.current}>
-              <FieldLabel>{t("currentAmount")}</FieldLabel>
+              <FieldLabel>{t('currentAmount')}</FieldLabel>
               <Input
                 type="number"
                 step="0.01"
                 min="0"
                 defaultValue="0"
-                {...register("current", {
-                  validate: (v) => !v || parseFloat(v) >= 0 || t("invalidNumber"),
+                {...register('current', {
+                  validate: (v) =>
+                    !v || parseFloat(v) >= 0 || t('invalidNumber'),
                 })}
               />
               <FieldErrorText>{errors.current?.message}</FieldErrorText>
             </FieldRoot>
 
-            <Button type="submit" colorScheme="blue" loading={isSubmitting} alignSelf="flex-start">
-              {t("save")}
+            <Button
+              type="submit"
+              colorScheme="blue"
+              loading={isSubmitting}
+              alignSelf="flex-start"
+            >
+              {t('save')}
             </Button>
           </Stack>
         </Box>
