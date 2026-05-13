@@ -1,10 +1,10 @@
-import { ChakraProvider, createSystem, defaultConfig } from '@chakra-ui/react';
-import { Box } from '@chakra-ui/react';
-import Header from './components/Header';
-import GoalForm from './components/GoalForm';
-import GoalList from './components/GoalList';
-import { GoalProvider } from './context/GoalContext';
-import './i18n/index.js';
+import { ChakraProvider, createSystem, defaultConfig } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import Header from "./components/Header";
+import GoalForm from "./components/GoalForm";
+import GoalList from "./components/GoalList";
+import { GoalProvider } from "./context/GoalContext";
+import "./i18n/index.js";
 
 const system = createSystem(defaultConfig);
 

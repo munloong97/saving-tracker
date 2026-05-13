@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["unicorn", "typescript", "react", "import"],
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "eqeqeq": "error",
+    "import/no-anonymous-default-export": "error",
+    "no-array-constructor": "error",
+    "no-dupe-keys": "error",
+    "no-duplicate-case": "error",
+    "no-empty": "error",
+    "no-empty-pattern": "error",
+    "no-invalid-regexp": "error",
+    "no-redeclare": "error",
+    "no-shadow-restricted-names": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^$"
+      }
+    ],
+    "no-useless-catch": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "react/exhaustive-deps": "error",
+    "react/no-children-prop": "off",
+    "react/rules-of-hooks": "error",
+    "typescript/ban-ts-comment": "error",
+    "typescript/ban-types": "error",
+    "typescript/no-namespace": "error",
+    "typescript/no-unsafe-declaration-merging": "error",
+    "typescript/prefer-as-const": "error",
+    "unicorn/no-new-array": "off",
+    "unicorn/no-thenable": "off",
+    "unicorn/no-useless-spread": "off"
+  }
+}

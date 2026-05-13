@@ -1,0 +1,44 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80,
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "sortPackageJson": false,
+  "sortImports": {
+    "groups": [
+      ["value-builtin", "value-external"],
+      "value-internal",
+      ["value-parent", "value-sibling", "value-index"]
+    ]
+  },
+  "ignorePatterns": [
+    ".config/**",
+    ".container/**",
+    ".github/**",
+    ".opencode/**",
+    ".pi/**",
+    ".vscode/**",
+    "app/assets/**",
+    "bin/**",
+    "config/**",
+    "db/**",
+    "docs/**",
+    "lib/**",
+    "log/**",
+    "public/**",
+    "test/**",
+    "vendor/**",
+    "*.d.ts",
+    "*.json",
+    "*.md",
+    "*.toml",
+    "*.yaml",
+    "*.yml",
+    "!pnpm-workspace.yaml",
+    "!.oxlintrc.json",
+    "!.oxfmtrc.json",
+    "!tsconfig.json",
+    "!package.json"
+  ]
+}
