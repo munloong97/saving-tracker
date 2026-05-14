@@ -1,0 +1,93 @@
+name: Push keys to Lokalise
+
+on:
+  # Auto-run when en.json is updated on main
+  push:
+    branches: [main]
+    paths:
+      - 'src/i18n/locales/en.json'
+
+  # Manual run from the Actions tab — lets you toggle dry-run
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (preview only, do not upload)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lokalise CLI
+        run: |
+          curl -sfL https://raw.githubusercontent.com/lokalise/lokalise-cli-2-go/master/install.sh | sh
+          ./bin/lokalise2 --version
+
+      - name: Preview file to upload
+        run: |
+          echo "::group::en.json contents"
+          cat src/i18n/locales/en.json
+          echo "::endgroup::"
+          echo "Key count: $(grep -cE '^\s*"[^"]+"\s*:' src/i18n/locales/en.json)"
+
+      - name: Dry run — list what would change
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run == true
+        env:
+          LOKALISE_TOKEN: ${{ secrets.LOKALISE_TOKEN }}
+          LOKALISE_PROJECT_ID: ${{ secrets.LOKALISE_PROJECT_ID }}
+        run: |
+          echo "🧪 DRY RUN — would upload src/i18n/locales/en.json to project $LOKALISE_PROJECT_ID"
+          echo ""
+          echo "Fetching current keys from Lokalise for comparison..."
+          curl -sH "X-Api-Token: $LOKALISE_TOKEN" \
+            "https://api.lokalise.com/api2/projects/$LOKALISE_PROJECT_ID/keys?limit=500" \
+            | jq -r '.keys[].key_name.web' | sort -u > lokalise-keys.txt || true
+
+          echo "Local keys in en.json:"
+          jq -r 'keys[]' src/i18n/locales/en.json | sort -u > local-keys.txt
+          cat local-keys.txt
+
+          echo ""
+          echo "🆕 Keys that WOULD be added to Lokalise:"
+          comm -23 local-keys.txt lokalise-keys.txt || true
+
+          echo ""
+          echo "🗑️ Keys in Lokalise but NOT in en.json (would be left alone — cleanup disabled):"
+          comm -13 local-keys.txt lokalise-keys.txt || true
+
+      - name: Upload en.json to Lokalise
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false)
+        env:
+          LOKALISE_TOKEN: ${{ secrets.LOKALISE_TOKEN }}
+          LOKALISE_PROJECT_ID: ${{ secrets.LOKALISE_PROJECT_ID }}
+        run: |
+          ./bin/lokalise2 \
+            --token "$LOKALISE_TOKEN" \
+            --project-id "$LOKALISE_PROJECT_ID" \
+            file upload \
+            --file src/i18n/locales/en.json \
+            --lang-iso en \
+            --replace-modified=false \
+            --distinguish-by-file=false \
+            --detect-icu-plurals=true \
+            --convert-placeholders=false \
+            --tag-inserted-keys=true \
+            --tag-updated-keys=true \
+            --tags "from-github,$(date +%Y-%m-%d)" \
+            --poll=true \
+            --poll-timeout=120s
+
+      - name: Summary
+        if: always()
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "✅ Dry run complete — nothing uploaded. Re-run with dry_run=false to push for real."
+          else
+            echo "✅ Upload finished. Check Lokalise → Keys tab → filter tag 'from-github'."
+          fi
