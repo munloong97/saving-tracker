@@ -26,5 +26,6 @@
   "required": "This field is required",
   "invalidNumber": "Enter a valid positive number",
   "new": "New",
-  "test": "Test"
+  "test": "Test",
+  "demo": "Demo"
 }
