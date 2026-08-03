@@ -24,7 +24,5 @@
   "percent": "{{value}}%",
   "confirmDelete": "¿Estás seguro de que quieres eliminar esta meta?",
   "required": "Este campo es obligatorio",
-  "invalidNumber": "Ingresa un número válido positivo",
-  "new": "Nuevo",
-  "test": "Prueba"
+  "invalidNumber": "Ingresa un número válido positivo"
 }
