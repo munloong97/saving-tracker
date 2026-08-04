@@ -24,5 +24,6 @@
   "percent": "{{value}}%",
   "confirmDelete": "确定要删除这个目标吗？",
   "required": "此字段为必填项",
-  "invalidNumber": "请输入有效的正数"
+  "invalidNumber": "请输入有效的正数",
+  "testing": ""
 }
